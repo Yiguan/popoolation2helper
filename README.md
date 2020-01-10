@@ -26,7 +26,9 @@ Making sure you have valid reference allele in column 3, and remove indels(only 
 
 ## Install
 
-Compile the source code directly, or using:
+Download the source files, and then
+compile the source code directly;
+or using:
 
 ```bash
 chmod 777 install.sh
@@ -53,6 +55,6 @@ It will generate two executable object: `calfreq` and `caldiff`.
 ```
 `-i` specify input sync file;
 
-`-p` specify the population pairs you want to compare allele frequency difference, each pair separated by ","
+`-p` specify the population pairs you want to compare allele frequency difference, each pair separated by `,`
 
 
