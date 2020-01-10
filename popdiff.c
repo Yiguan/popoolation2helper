@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "calFreq.h"
+#include "calFreqByField.h"
 
 // determine the number of field
 int total_field_num(char *line)
