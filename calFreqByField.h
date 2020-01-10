@@ -1,0 +1,1 @@
+double calFreq(char *ref, char *field);
