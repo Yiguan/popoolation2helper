@@ -1,1 +1,1 @@
-double calFreq(char *ref, char *field);
+double calFreq(char *ref, char *field, int min_depth, int max_depth);

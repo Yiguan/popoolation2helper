@@ -18,6 +18,22 @@ int total_field_num(char *line)
     return count;
 }
 
+// check depth, 
+// if contain 9.99, return 0, indicate unsatisfied depth
+// if not, return 1, indicate satisfied depth 
+int checkDepth(double *arr)
+{
+	while (*arr)
+	{
+		if(*arr==9.99)
+		{
+			return 0;
+		}
+		arr++;
+	}
+	return 1;
+}
+
 
 int main(int argc, char const *argv[])
 {
@@ -26,6 +42,8 @@ int main(int argc, char const *argv[])
 	char *filename=NULL;
 	int group[255]={0};
 	int groupNum = 0;
+	//filter depth 0-999 for each popualtion
+	int depth[2] = {0,999};
 	for (int i = 1; i < argc; )
 	{
 		char flag;
@@ -50,12 +68,16 @@ int main(int argc, char const *argv[])
 					groupNum++;
 				}
 				break;
+			case 'd':
+				sscanf(argv[i+1],"%d,%d", &depth[0],&depth[1]);
+				break;
 			default:
 				printf("Argument Error!\n");
 				exit(0);
 		}
 		i = i + 2;
 	}
+
 	// check compulsary arguments
 	if(filename == NULL)
 	{
@@ -101,6 +123,7 @@ int main(int argc, char const *argv[])
 
 		while(fgets(line,sizeof(line),infp) != NULL)
 		{
+			char chr[80];
 			int pos;
 			char ref;
 			double allelefreq[allField-3];
@@ -112,44 +135,49 @@ int main(int argc, char const *argv[])
 				switch (field_num)
 				{
 					case 0:
-						fprintf(outfp, "%s\t", linep);
+						// fprintf(outfp, "%s\t", linep);
+						sscanf(linep,"%s",chr);
 						break;
 					case 1:
 						sscanf(linep,"%d",&pos);
-						fprintf(outfp, "%d\t", pos);
+						// fprintf(outfp, "%d\t", pos);
 						break;
 					case 2:
 						ref = *linep;
-						fprintf(outfp, "%c\t", ref);
+						// fprintf(outfp, "%c\t", ref);
 						break;
 					default:
-						allelefreq[field_num-3] = calFreq(&ref,linep);
+						allelefreq[field_num-3] = calFreq(&ref,linep,depth[0],depth[1]);
 				}
 				linep = strtok(NULL,"\t");
 				field_num++;
 			}
-			// determine ouput allele or allele difference
-			// if no specific output field freq or "-f 0" , then output all field freq
-			if(group[0]==0)
-			{
-				for (int i = 0; i < allField-3; ++i)
-				{
-					fprintf(outfp, "%lf\t",allelefreq[i]);
-				}
-				fprintf(outfp,"\n");
-			}
-			else // output specfied field freq
-			{
-				int j = 0;
-				while(group[j]!=0)
-				{
-					int k = group[j];
-					fprintf(outfp, "%lf\t",allelefreq[k-1]);
-					j++;
-				}
-				fprintf(outfp,"\n");
-			}
+			//check depth
 
+			if(checkDepth(allelefreq))
+			{
+				fprintf(outfp, "%s\t%d\t%c\t", chr,pos,ref);
+				if(group[0]==0)
+				{				
+					for (int i = 0; i < allField-3; ++i)
+					{
+						fprintf(outfp, "%lf\t",allelefreq[i]);
+					}
+					fprintf(outfp,"\n");
+				}
+				else // output specfied field freq
+				{
+					int j = 0;
+					while(group[j]!=0)
+					{
+						int k = group[j];
+						fprintf(outfp, "%lf\t",allelefreq[k-1]);
+						j++;
+					}
+					fprintf(outfp,"\n");
+				}
+
+			}
 		}
 		fclose(infp);
 		fclose(outfp);

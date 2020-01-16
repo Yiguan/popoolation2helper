@@ -17,7 +17,21 @@ int total_field_num(char *line)
     }
     return count;
 }
-
+// check depth, 
+// if contain 9.99, return 0, indicate unsatisfied depth
+// if not, return 1, indicate satisfied depth 
+int checkDepth(double *arr)
+{
+	while (*arr)
+	{
+		if(*arr==9.99)
+		{
+			return 0;
+		}
+		arr++;
+	}
+	return 1;
+}
 
 int main(int argc, char const *argv[])
 {
@@ -26,6 +40,7 @@ int main(int argc, char const *argv[])
 	char *filename=NULL;
 	int pair[255]={0};
 	int pairNum=0;
+	int depth[2] = {0,999};
 	for (int i = 1; i < argc; )
 	{
 		char flag;
@@ -50,6 +65,9 @@ int main(int argc, char const *argv[])
 					pp = strtok(NULL,",");
 					pairNum = pairNum + 2;
 				}
+				break;
+			case 'd':
+				sscanf(argv[i+1],"%d,%d", &depth[0],&depth[1]);
 				break;
 			default:
 				printf("Argument Error!\n");
@@ -99,6 +117,7 @@ int main(int argc, char const *argv[])
 
 		while(fgets(line,sizeof(line),infp) != NULL)
 		{
+			char chr[80];
 			int pos;
 			char ref;
 			double allelefreq[allField-3];
@@ -110,33 +129,36 @@ int main(int argc, char const *argv[])
 				switch (field_num)
 				{
 					case 0:
-						fprintf(outfp, "%s\t", linep);
+						// fprintf(outfp, "%s\t", linep);
+						sscanf(linep,"%s",chr);
 						break;
 					case 1:
 						sscanf(linep,"%d",&pos);
-						fprintf(outfp, "%d\t", pos);
+						// fprintf(outfp, "%d\t", pos);
 						break;
 					case 2:
 						ref = *linep;
-						fprintf(outfp, "%c\t", ref);
+						// fprintf(outfp, "%c\t", ref);
 						break;
 					default:
-						allelefreq[field_num-3] = calFreq(&ref,linep);
+						allelefreq[field_num-3] = calFreq(&ref,linep,depth[0],depth[1]);
 				}
 				linep = strtok(NULL,"\t");
 				field_num++;
 			}
-
-			int j = 0;
-			while(pair[j]!=0)
+			if(checkDepth(allelefreq))
 			{
-				int k = pair[j];
-				int l = pair[j+1];
-				fprintf(outfp, "%lf\t",allelefreq[k-1] - allelefreq[l-1]);
-				j=j+2;
+				fprintf(outfp, "%s\t%d\t%c\t", chr,pos,ref);
+				int j = 0;
+				while(pair[j]!=0)
+				{
+					int k = pair[j];
+					int l = pair[j+1];
+					fprintf(outfp, "%lf\t",allelefreq[k-1] - allelefreq[l-1]);
+					j=j+2;
+				}
+				fprintf(outfp,"\n");
 			}
-			fprintf(outfp,"\n");
-
 		}
 		fclose(infp);
 		fclose(outfp);
