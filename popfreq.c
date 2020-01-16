@@ -165,7 +165,7 @@ int main(int argc, char const *argv[])
 			}
 
 			//check depth
-			if(checkDepth(allelefreq) && zeroNum ==2 )
+			if(checkDepth(allelefreq) && zeroNum ==2 && ref != 'N')
 			{
 				fprintf(outfp, "%s\t%d\t%c\t", chr,pos,ref);
 				if(group[0]==0)
