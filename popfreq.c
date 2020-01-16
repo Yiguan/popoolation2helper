@@ -164,8 +164,27 @@ int main(int argc, char const *argv[])
 				}
 			}
 
-			//check depth
-			if(checkDepth(allelefreq) && zeroNum ==2 && ref != 'N')
+			// check reference
+			int checkref = 0;
+			switch (ref)
+			{
+			case 'A':
+			case 'a':
+			case 'T':
+			case 't':
+			case 'C':
+			case 'c':
+			case 'G':
+			case 'g':
+				checkref = 1;
+				break;
+			default:
+				checkref = 0;
+				break;
+			}
+			
+			// decide if print line
+			if(checkDepth(allelefreq) && zeroNum ==2 && checkref)
 			{
 				fprintf(outfp, "%s\t%d\t%c\t", chr,pos,ref);
 				if(group[0]==0)
