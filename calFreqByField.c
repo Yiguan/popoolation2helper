@@ -11,15 +11,19 @@ double calFreq(char *ref, char *field)
     total = (double) (a0+a1+a2+a3);
     switch (*ref)
     {
+    case 'a':
     case 'A':
         freq = a0/total;
         break;
+    case 't':
     case 'T':
         freq = a1/total;
         break;
+    case 'c': 
     case 'C':
         freq = a2/total;
         break;
+    case 'g':
     case 'G':
         freq = a3/total;
         break;
