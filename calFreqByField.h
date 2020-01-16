@@ -1,1 +1,1 @@
-double calFreq(char *ref, char *field, int min_depth, int max_depth);
+double  calFreq(char *ref, char *field, int min_depth, int max_depth, int *linesum0,int *linesum1,int *linesum2,int *linesum3);

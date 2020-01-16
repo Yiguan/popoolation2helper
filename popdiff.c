@@ -124,6 +124,7 @@ int main(int argc, char const *argv[])
 			char *linep;
 			linep = strtok(line,"\t");
 			int field_num = 0;
+			int lineSum[4] = {0,0,0,0};
 			while(linep!=NULL)
 			{	
 				switch (field_num)
@@ -141,12 +142,23 @@ int main(int argc, char const *argv[])
 						// fprintf(outfp, "%c\t", ref);
 						break;
 					default:
-						allelefreq[field_num-3] = calFreq(&ref,linep,depth[0],depth[1]);
+						allelefreq[field_num-3] = calFreq(&ref,linep,depth[0],depth[1],&lineSum[0],&lineSum[1],&lineSum[2],&lineSum[3]);
 				}
 				linep = strtok(NULL,"\t");
 				field_num++;
 			}
-			if(checkDepth(allelefreq))
+			// check biallelic
+			int zeroNum = 0;
+			int h=0;
+			for(h=0;h<4;h++)
+			{
+				if(lineSum[h]==0)
+				{
+					zeroNum++;
+				}
+			}
+			//check depth
+			if(checkDepth(allelefreq) && zeroNum ==2 )
 			{
 				fprintf(outfp, "%s\t%d\t%c\t", chr,pos,ref);
 				int j = 0;

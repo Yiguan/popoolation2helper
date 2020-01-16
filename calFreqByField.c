@@ -2,13 +2,19 @@
 #include <string.h>
 #include <stdlib.h>
 
-double calFreq(char *ref, char *field, int min_depth, int max_depth)
+
+double  calFreq(char *ref, char *field, int min_depth, int max_depth, int *linesum0,int *linesum1,int *linesum2,int *linesum3)
 {
     int a0,a1,a2,a3,a4,a5;
     double total;
     sscanf(field,"%d:%d:%d:%d:%d:%d",&a0,&a1,&a2,&a3,&a4,&a5);
     double freq=0.0;
     total = (double) (a0+a1+a2+a3);
+    // summary line allele count
+    *linesum0 = *linesum0 + a0;
+    *linesum1 = *linesum1 + a1;
+    *linesum2 = *linesum2 + a2;
+    *linesum3 = *linesum3 + a3;
     // set flag, if position coverage not satisfied,
     // return 9.99 as flag value
     if(total > max_depth || total < min_depth)

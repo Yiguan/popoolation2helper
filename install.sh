@@ -1,6 +1,6 @@
 #!/usr/bin/env  bash
-gcc -c calFreqByField.c
-gcc -c popdiff.c
-gcc -c popfreq.c
-gcc calFreqByField.o popdiff.o -o caldiff
-gcc calFreqByField.o popfreq.o -o calfreq
+g++ -c calFreqByField.c
+g++ -c popdiff.c
+g++ -c popfreq.c
+g++ calFreqByField.o popdiff.o -o caldiff
+g++ calFreqByField.o popfreq.o -o calfreq

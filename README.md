@@ -22,7 +22,7 @@ sync data (refer to popoolation2 tutorial) format as following:
 2L	3069	A	200:2:0:0:0:0	197:5:0:0:0:0	202:0:0:0:0:0	202:0:0:0:0:0	202:0:0:0:0:0
 ```
 
-Making sure you have valid reference allele in column 3, and remove indels(only include SNPs)
+Making sure you have valid reference allele in column 3.
 
 ## Install
 
