@@ -44,6 +44,7 @@ int main(int argc, char const *argv[])
 	int groupNum = 0;
 	//filter depth 0-999 for each popualtion
 	int depth[2] = {0,999};
+	int biallele = 0;
 	for (int i = 1; i < argc; )
 	{
 		char flag;
@@ -70,6 +71,9 @@ int main(int argc, char const *argv[])
 				break;
 			case 'd':
 				sscanf(argv[i+1],"%d,%d", &depth[0],&depth[1]);
+				break;
+			case 'b':
+				sscanf(argv[i+1],"%d", &biallele);
 				break;
 			default:
 				printf("Argument Error!\n");
@@ -154,15 +158,21 @@ int main(int argc, char const *argv[])
 				field_num++;
 			}
 			// check biallelic
-			int zeroNum = 0;
-			int h=0;
-			for(h=0;h<4;h++)
+			int alleleok=1;
+			if(biallele)
 			{
-				if(lineSum[h]==0)
+				int zeroNum = 0;
+				int h=0;
+				for(h=0;h<4;h++)
 				{
-					zeroNum++;
+					if(lineSum[h]==0)
+					{
+						zeroNum++;
+					}
 				}
+				zeroNum==2?(alleleok=1):(alleleok=0);
 			}
+
 
 			// check reference
 			int checkref = 0;
@@ -184,7 +194,7 @@ int main(int argc, char const *argv[])
 			}
 			
 			// decide if print line
-			if(checkDepth(allelefreq) && zeroNum ==2 && checkref)
+			if(checkDepth(allelefreq) && alleleok && checkref)
 			{
 				fprintf(outfp, "%s\t%d\t%c\t", chr,pos,ref);
 				if(group[0]==0)

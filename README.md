@@ -41,26 +41,29 @@ It will generate two executable object: `calfreq` and `caldiff`.
 1. calculate allele frequency
 
 ```bash
-./calfreq -i test.sync -f 1,3,2,5 -d 20,150
+./calfreq -i test.sync -f 1,3,2,5 -d 20,150 -b 0
 ```
 
 `-i` specify input sync file;
 
 `-f` specify the poplation you want to calculate allele frequency, `0` indicate all populations;
 
-`-d` specify read depth, a biallelic site with a read depth between 20-150 for all populations(not only specified using `-f`) can be retained in the output file.
+`-d` specify read depth, a biallelic site with a read depth between 20-150 for all populations(not only specified using `-f`) can be retained in the output file. default 0,999
+
+`-b` specify if only keep biallelic sites. `1` indicates only keep biallelic sites, `0` indicates NOT check biallelic. default 0.
 
 2. calculate allele frequency difference
 
 ```bash
-./caldiff -i test.sync -p 1-2,4-3,2-5 -d 20,150
+./caldiff -i test.sync -p 1-2,4-3,2-5 -d 20,150 -b 0
 ```
 `-i` specify input sync file;
 
 `-p` specify the population pairs you want to compare allele frequency difference, each pair separated by `,`;
 
-`-d` specify read depth.
+`-d` specify read depth. default 0,999
 
+`-b` specify if only keep biallelic sites. `1` indicates only keep biallelic sites, `0` indicates NOT check biallelic. default 0.
 
 
 
