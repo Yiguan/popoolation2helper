@@ -43,13 +43,15 @@ double  calFreq(char *ref, char *field, int min_depth, int max_depth, int *lines
             break;
         case 'N':
             printf("Reference allele: N?\n");
+            break;
             // exit(0);
         case 'D':
             printf("Refereence allele: indel?\n");
             // exit(0);
+            break;
         default:
             printf("Error! Reference allele not in A,T,C,G,N,D\n");
-            //exit(0);
+            exit(0);
         }
         return freq; 
     }
