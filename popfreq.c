@@ -103,12 +103,12 @@ int main(int argc, char const *argv[])
 		int allField = total_field_num(line);
 		fseek(infp, 0, SEEK_SET); // set file inner pointer to beginning
 		// write file row names
-		fprintf(outfp, "chrom\tpos\tref\t");
+		fprintf(outfp, "chrom\tpos\tref");
 		if(group[0]==0)
 		{
 			for (int i = 1; i <= allField-3; ++i)
 			{
-				fprintf(outfp,"%c%d\t",'f',i);
+				fprintf(outfp,"\t%c%d",'f',i);
 			}
 			fprintf(outfp, "\n");
 		}
@@ -119,7 +119,7 @@ int main(int argc, char const *argv[])
 			{
 				int mm = 0;
 				mm = group[m];
-				fprintf(outfp, "%c%d\t",'f',mm);
+				fprintf(outfp, "\t%c%d",'f',mm);
 				m++;
 			}
 			fprintf(outfp, "\n");
@@ -196,12 +196,12 @@ int main(int argc, char const *argv[])
 			// decide if print line
 			if(checkDepth(allelefreq) && alleleok && checkref)
 			{
-				fprintf(outfp, "%s\t%d\t%c\t", chr,pos,ref);
+				fprintf(outfp, "%s\t%d\t%c", chr,pos,ref);
 				if(group[0]==0)
 				{				
 					for (int i = 0; i < allField-3; ++i)
-					{
-						fprintf(outfp, "%lf\t",allelefreq[i]);
+					{	
+						fprintf(outfp, "\t%lf",allelefreq[i]);
 					}
 					fprintf(outfp,"\n");
 				}
@@ -211,7 +211,7 @@ int main(int argc, char const *argv[])
 					while(group[j]!=0)
 					{
 						int k = group[j];
-						fprintf(outfp, "%lf\t",allelefreq[k-1]);
+						fprintf(outfp, "\t%lf",allelefreq[k-1]);
 						j++;
 					}
 					fprintf(outfp,"\n");

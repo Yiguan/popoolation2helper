@@ -105,7 +105,7 @@ int main(int argc, char const *argv[])
 		int allField = total_field_num(line);
 		fseek(infp, 0, SEEK_SET); // set file inner pointer to beginning
 		// output col names
-		fprintf(outfp, "chrom\tpos\tref\t");
+		fprintf(outfp, "chrom\tpos\tref");
 
 		int m = 0;
 		while(pair[m]!=0)
@@ -114,7 +114,7 @@ int main(int argc, char const *argv[])
 			int nn = 0;
 			mm = pair[m];
 			nn = pair[m+1];
-			fprintf(outfp, "%c%d%c%d\t",'p',mm,'_',nn);
+			fprintf(outfp, "\t%c%d%c%d",'p',mm,'_',nn);
 			m = m + 2;
 		}
 		fprintf(outfp, "\n");
@@ -188,13 +188,13 @@ int main(int argc, char const *argv[])
 			// decide if print line
 			if(checkDepth(allelefreq) && alleleok && checkref)
 			{
-				fprintf(outfp, "%s\t%d\t%c\t", chr,pos,ref);
+				fprintf(outfp, "%s\t%d\t%c", chr,pos,ref);
 				int j = 0;
 				while(pair[j]!=0)
 				{
 					int k = pair[j];
 					int l = pair[j+1];
-					fprintf(outfp, "%lf\t",allelefreq[k-1] - allelefreq[l-1]);
+					fprintf(outfp, "\t%lf",allelefreq[k-1] - allelefreq[l-1]);
 					j=j+2;
 				}
 				fprintf(outfp,"\n");
