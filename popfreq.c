@@ -21,9 +21,10 @@ int total_field_num(char *line)
 // check depth, 
 // if contain 9.99, return 0, indicate unsatisfied depth
 // if not, return 1, indicate satisfied depth 
-int checkDepth(double *arr)
+int checkDepth(double *arr, int len)
 {
-	while (*arr)
+	int i = 0;
+	for(;i<len;i++)
 	{
 		if(*arr==9.99)
 		{
@@ -194,7 +195,7 @@ int main(int argc, char const *argv[])
 			}
 			
 			// decide if print line
-			if(checkDepth(allelefreq) && alleleok && checkref)
+			if(checkDepth(allelefreq,allField-3) && alleleok && checkref)
 			{
 				fprintf(outfp, "%s\t%d\t%c", chr,pos,ref);
 				if(group[0]==0)
