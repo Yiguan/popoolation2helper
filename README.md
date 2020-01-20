@@ -41,7 +41,7 @@ It will generate two executable object: `calfreq` and `caldiff`.
 1. calculate allele frequency
 
 ```bash
-./calfreq -i test.sync -f 1,3,2,5 -d 20,150 -b 0
+./calfreq -i test.sync -f 1,3,2,5 -d 0,999 -b 0 -m 0.05
 ```
 
 `-i` specify input sync file;
@@ -52,10 +52,12 @@ It will generate two executable object: `calfreq` and `caldiff`.
 
 `-b` specify if only keep biallelic sites. `1` indicates only keep biallelic sites, `0` indicates NOT check biallelic. default 0.
 
+`-m` specify minor allele freqeucny(MAF) across all pops together. Alelel with second largest counts is regarded as minor allele. default 0.05.
+
 2. calculate allele frequency difference
 
 ```bash
-./caldiff -i test.sync -p 1-2,4-3,2-5 -d 20,150 -b 0
+./caldiff -i test.sync -p 1-2,4-3,2-5 -d 0,999 -b 0 -m 0.05
 ```
 `-i` specify input sync file;
 
@@ -65,5 +67,5 @@ It will generate two executable object: `calfreq` and `caldiff`.
 
 `-b` specify if only keep biallelic sites. `1` indicates only keep biallelic sites, `0` indicates NOT check biallelic. default 0.
 
-
+`-m` specify minor allele freqeucny(MAF) across all pops together. Alelel with second largest counts is regarded as minor allele. default 0.05.
 

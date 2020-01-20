@@ -2,7 +2,17 @@
 #include <string.h>
 #include <stdlib.h>
 #include "calFreqByField.h"
+#include <stdlib.h>
 
+// order allele count
+int comp (const void * elem1, const void * elem2) 
+{
+    int f = *((int*)elem1);
+    int s = *((int*)elem2);
+    if (f > s) return  1;
+    if (f < s) return -1;
+    return 0;
+}
 // determine the number of field
 int total_field_num(char *line)
 {
@@ -43,6 +53,7 @@ int main(int argc, char const *argv[])
 	int pairNum=0;
 	int depth[2] = {0,999};
 	int biallele = 0;
+	double maf_thres = 0.05;
 	for (int i = 1; i < argc; )
 	{
 		char flag;
@@ -74,6 +85,9 @@ int main(int argc, char const *argv[])
 			case 'b':
 				sscanf(argv[i+1],"%d", &biallele);
 				break;
+			case 'm':
+				sscanf(argv[i+1],"%lf", &maf_thres);
+				break;			
 			default:
 				printf("Argument Error!\n");
 				exit(0);
@@ -167,6 +181,15 @@ int main(int argc, char const *argv[])
 				}
 				zeroNum==2?(alleleok=1):(alleleok=0);
 			}
+
+			// check MAF
+			// sort allele, small to large
+			// second largest allele as minor allele
+			int mafok = 0;
+			qsort(lineSum, sizeof(lineSum)/sizeof(*lineSum), sizeof(*lineSum), comp);
+			double maf = (double) (lineSum[2])/(lineSum[0] + lineSum[1] + lineSum[2] + lineSum[3]);
+			if (maf >= maf_thres){mafok = 1;}
+
 			// check reference
 			int checkref = 0;
 			switch (ref)
@@ -187,7 +210,7 @@ int main(int argc, char const *argv[])
 			}
 			
 			// decide if print line
-			if(checkDepth(allelefreq,allField-3) && alleleok && checkref)
+			if(checkDepth(allelefreq,allField-3) && alleleok && checkref && mafok)
 			{
 				fprintf(outfp, "%s\t%d\t%c", chr,pos,ref);
 				int j = 0;
