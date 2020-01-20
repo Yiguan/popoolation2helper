@@ -115,7 +115,7 @@ int main(int argc, char const *argv[])
 	FILE * outfp = fopen(outname,"w");
 	if (infp && outfp)
 	{
-		char line[1024]; // line size
+		char line[2048]; // line size
 		fgets(line,sizeof(line), infp);
 		int allField = total_field_num(line);
 		fseek(infp, 0, SEEK_SET); // set file inner pointer to beginning
