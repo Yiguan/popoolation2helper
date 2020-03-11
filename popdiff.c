@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "calFreqByField.h"
-#include <stdlib.h>
+
 
 // order allele count
 int comp (const void * elem1, const void * elem2) 
