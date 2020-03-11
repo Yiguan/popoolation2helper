@@ -5,7 +5,7 @@ popoolation2 <https://sourceforge.net/p/popoolation2/wiki/Tutorial/> is a very u
 
 This tool exploits the sync data, but it allows you to specify the populations you want to calculate allele frequency, and allows you to specify the population pairs you want to compare allele frequency difference without necessary to output  difference across all populations.
 
-## input data format
+## Input data format
 
 sync data (refer to popoolation2 tutorial) format as following:
 
@@ -69,3 +69,10 @@ It will generate two executable object: `calfreq` and `caldiff`.
 
 `-m` specify minor allele freqeucny(MAF) across all pops together. Alelel with second largest counts is regarded as minor allele. default 0.05.
 
+3. calculate coverage for each site in each population
+
+```bash
+./calcov test.sync
+```
+This function will calculate the allele count of A/T/C/G in each site for each population.
+The outcome will be in `test.sync.cov` file.
