@@ -48,7 +48,7 @@ It will generate two executable object: `calfreq` and `caldiff`.
 
 `-f` specify the poplation you want to calculate allele frequency, `0` indicate all populations;
 
-`-d` specify read depth, a biallelic site with a read depth between 20-150 for all populations(not only specified using `-f`) can be retained in the output file. default 0,999
+`-d` specify read depth, a biallelic site with a read depth between 0-999 for all populations(not only specified using `-f`) can be retained in the output file. default 0,999
 
 `-b` specify if only keep biallelic sites. `1` indicates only keep biallelic sites, `0` indicates NOT check biallelic. default 0.
 
